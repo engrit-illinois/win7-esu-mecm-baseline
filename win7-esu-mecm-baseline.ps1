@@ -50,11 +50,6 @@ $esuKeys = @(
 	}
 )
 
-# Check if ESU activated on Windows 7 device
-
-# Original (erroneously removed year 3 instead of year 1)
-#$ESU=Get-WmiObject -query "select * from softwarelicensingproduct where PartialProductKey IS NOT NULL AND (ID='0e00c25d-8795-4fb7-9572-3803d91b6880' OR ID='77db037b-95c3-48d7-a3ab-a9c6d41093e0')"
-
 # Get SoftwareLicensingProduct WMI class data
 # Use the older Get-WmiObject, in case the system doesn't support Get-CimInstance
 $slp = Get-CimInstance -ClassName "SoftwareLicensingProduct"
