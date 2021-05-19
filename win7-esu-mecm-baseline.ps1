@@ -57,23 +57,26 @@ $esuKeys = @(
 
 # Get SoftwareLicensingProduct WMI class data
 # Use the older Get-WmiObject, in case the system doesn't support Get-CimInstance
-#$slp = Get-CimInstance -ClassName "SoftwareLicensingProduct"
-$slp = Get-WmiObject -ClassName "SoftwareLicensingProduct"
+$slp = Get-CimInstance -ClassName "SoftwareLicensingProduct"
+if(-not $slp) {
+	$slp = Get-WmiObject -ClassName "SoftwareLicensingProduct"
+}
 
-# Get array of raw key IDs
-$keys = $slp | Where { $_.PartialProductKey } | Select -ExpandProperty ID
+if($slp) {
+	# Get array of raw key IDs
+	$keys = $slp | Where { $_.PartialProductKey } | Select -ExpandProperty ID
 
-# Check that at least one of the key IDs is a valid and current key
-$valid = $false
-$keys | ForEach-Object {
-	$thisKey = $_
-	$matchingKey = $esuKeys | Where { $_.Id -eq $thisKey }
-	if($matchingKey) {
-		# System has a matching key
-		# Check that it is current
-		$date = Get-Date
-		if($date -lt $matchingKey.Expires) {
-			$valid = $true
+	# Check that at least one of the key IDs is a valid and current key
+	$keys | ForEach-Object {
+		$thisKey = $_
+		$matchingKey = $esuKeys | Where { $_.Id -eq $thisKey }
+		if($matchingKey) {
+			# System has a matching key
+			# Check that it is current
+			$date = Get-Date
+			if($date -lt $matchingKey.Expires) {
+				$valid = $true
+			}
 		}
 	}
 }
