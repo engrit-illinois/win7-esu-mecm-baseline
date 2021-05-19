@@ -25,6 +25,8 @@ $esuKeys = @(
 		"Year" = 3
 		"Id" = "4220f546-f522-46df-8202-4d07afd26454"
 		"Expires" = Get-Date "2022-12-31"
+		
+	<# Keys for Server 2008, kept for reference
 	},
 	[PSCustomObject]@{
 		"OS" = "2008"
@@ -43,6 +45,8 @@ $esuKeys = @(
 		"Year" = 3
 		"Id" = "16c08c85-0c8b-4009-9b2b-f1f7319e45f9"
 		"Expires" = Get-Date "2022-12-31"
+	#>
+	
 	}
 )
 
